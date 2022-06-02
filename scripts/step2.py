@@ -43,11 +43,18 @@ def get_tokens(doc):
     data_list = [["text", "text_lower", "lemma", "lemma_lower",
                   "part_of_speech", "is_alphabet", "is_stopword"]]
 
-    for token in doc:
-        data_list.append([
-            token.text, token.lower_, token.lemma_, token.lemma_.lower(),
-            token.pos_, token.is_alpha, token.is_stop
-        ])
+    data_list.extend(
+        [
+            token.text,
+            token.lower_,
+            token.lemma_,
+            token.lemma_.lower(),
+            token.pos_,
+            token.is_alpha,
+            token.is_stop,
+        ]
+        for token in doc
+    )
 
     with open("./tokens.csv", "w", encoding="utf-8", newline="") as tokens_file:
         csv.writer(tokens_file).writerows(data_list)
@@ -65,9 +72,7 @@ def get_entities(doc):
 
     data_list = [["text", "text_lower", "label"]]
 
-    for ent in doc.ents:
-        data_list.append([ent.text, ent.lower_, ent.label_])
-
+    data_list.extend([ent.text, ent.lower_, ent.label_] for ent in doc.ents)
     with open("./entities.csv", "w", encoding="utf-8", newline="") as entities_file:
         csv.writer(entities_file).writerows(data_list)
 

@@ -134,7 +134,7 @@ def get_state_counts(df):
     """
 
     total_count = 0
-    state_counts = list()
+    state_counts = []
 
     # We will get the count for each state.
     for state in STATES:
