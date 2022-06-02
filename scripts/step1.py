@@ -37,13 +37,9 @@ def extract_text():
     reader = PyPDF2.PdfFileReader("informe.pdf")
     full_text = ""
 
-    # The page numbers in the PDF are not the same as the reported
-    # number of pages, we use this variable to keep track of both.
-    pdf_page_number = 3
-
     # We will only retrieve the first 3 sections of the government report
     # which are between pages 14 and 326.
-    for i in range(14, 327):
+    for pdf_page_number, i in enumerate(range(14, 327), start=3):
 
         # This block is used to remove the page number at the start of
         # each page. The first if removes page numbers with one digit.
@@ -57,8 +53,6 @@ def extract_text():
             page_text = reader.getPage(i).extractText().strip()[3:]
 
         full_text += page_text.replace("\n", "")
-        pdf_page_number += 1
-
     # There's a small issue when decoding the PDF file.
     # We will manually fix all the weird characters
     # with their correct equivalents.
